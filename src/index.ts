@@ -119,7 +119,7 @@ export function initServer(serverOptions: Partial<ServerOptions>): {
 
 const HOST = '0.0.0.0';
 
-http.listen(PORT, HOST, () => {
+http.listen(Number(PORT), HOST, () => {
   logger.info(`Server is running on http://${HOST}:${PORT}`);
   
   logger.info(
