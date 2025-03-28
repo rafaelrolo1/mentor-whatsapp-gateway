@@ -36,6 +36,10 @@ export async function encryptSession(
   const { authorization: token } = req.headers;
   const secureTokenEnv = req.serverOptions.secretKey;
 
+console.log('🚨 SECRET_KEY RUNTIME:', secureTokenEnv);
+console.log('🔑 Received from Request:', tokenDecrypt);
+
+
   let tokenDecrypt = '';
 
   if (secretkey === undefined) {
