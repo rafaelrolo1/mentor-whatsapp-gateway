@@ -50,7 +50,6 @@ export function initServer(serverOptions: Partial<ServerOptions>): {
   }
 
   serverOptions = mergeDeep({}, config, serverOptions);
-  serverOptions.secretKey = config.secretKey;
   defaultLogger.level = serverOptions?.log?.level
     ? serverOptions.log.level
     : 'silly';
@@ -117,20 +116,15 @@ export function initServer(serverOptions: Partial<ServerOptions>): {
     });
   });
 
-const HOST = '0.0.0.0';
+  http.listen(PORT, () => {
+    logger.info(`Server is running on port: ${PORT}`);
+    logger.info(
+      `\x1b[31m Visit ${serverOptions.host}:${PORT}/api-docs for Swagger docs`
+    );
+    logger.info(`WPPConnect-Server version: ${version}`);
 
-http.listen(Number(PORT), HOST, () => {
-  logger.info(`Server is running on http://${HOST}:${PORT}`);
-  
-  logger.info(
-    `\x1b[31m Visit ${serverOptions.host}:${PORT}/api-docs for Swagger docs`
-  );
-  logger.info(`WPPConnect-Server version: ${version}`);
-
-  if (serverOptions.startAllSession) {
-    startAllSessions(serverOptions, logger);
-  }
-});
+    if (serverOptions.startAllSession) startAllSessions(serverOptions, logger);
+  });
 
   if (config.log.level === 'error' || config.log.level === 'warn') {
     console.log(`\x1b[33m ======================================================
