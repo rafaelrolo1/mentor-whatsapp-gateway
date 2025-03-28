@@ -50,6 +50,7 @@ export function initServer(serverOptions: Partial<ServerOptions>): {
   }
 
   serverOptions = mergeDeep({}, config, serverOptions);
+  serverOptions.secretKey = config.secretKey;
   defaultLogger.level = serverOptions?.log?.level
     ? serverOptions.log.level
     : 'silly';
